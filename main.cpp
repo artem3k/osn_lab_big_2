@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 #include "Engineer.h"
 #include "utility.h"
 #define line "\n-----------------------------------\n"
@@ -20,7 +21,7 @@ void showEngineer(){
         cout << "Список пуст.";
     }
     for (int i = 0; i < cash.size(); i++) {
-        cout << i <<  ". " << cash[i].name << " " << cash[i].surname;
+        cout << i <<  ". " << cash[i].name << " " << cash[i].surname << endl;
     }
     cout << endl;
 }
@@ -67,7 +68,7 @@ void selectedEngineer(int index){
                 }
                 break;
             case 4:
-                cash.erase(remove(cash.begin(), cash.end(), 5), cash.end());
+                cash.erase(cash.begin() + index);
                 cout << "\nИнженер уволен.\n";
                 run = false;
                 break;
