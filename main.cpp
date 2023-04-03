@@ -137,6 +137,53 @@ void open_file(){
 
 void load_file(){
     open_file();
+    string l;
+
+    int lengthFile = utility::lengthFile(file_name);
+    ifstream f(file_name);
+    if(lengthFile % 5){
+        cout << line << "Ошибка! Длина файл не верная!" << line;
+        exit(0);
+    }
+
+    int rr = lengthFile / 5;
+
+    for(int i = 0;i<rr;i++){
+        int ss = 1;
+        string name;
+        string surname;
+        string task_name;
+        int com_task;
+        bool work;
+
+        do{
+            getline(f,l);
+            switch (ss) {
+                case 1:
+                    name = l;
+                    break;
+                case 2:
+                    surname = l;
+                    break;
+                case 3:
+                    task_name = l;
+                    break;
+                case 4:
+                    com_task = atoi(l.c_str());
+                    break;
+                case 5:
+                    work = stoi(l);
+                    if (stoi(l) == 1) {
+                        break;
+                    }
+            }
+            ss++;
+        }
+        while (ss <= 5);
+        cash.emplace_back(name,surname,task_name,com_task,work);
+    }
+    f.close();
+    cout << "Данные загружены. Файл успешно открыт!";
 }
 
 void create_file(){
@@ -155,6 +202,26 @@ void create_file(){
     } while (true);
     good:
     file_is_selected = true;
+}
+
+void save_file(){
+    ofstream f;
+    f.open(file_name);
+    if (f.is_open())
+    {
+        for(int i = 0;i<cash.size();i++){
+            if(i != 0 ){
+                f << endl;
+            }
+            f << cash[i].name << endl
+              << cash[i].surname << endl
+              << cash[i].task_name << endl
+              << cash[i].completed_tasks << endl
+              << (int)cash[i].is_work();
+        }
+    }
+    f.close();
+    cout << line << "Сохранено в" << file_name << "" << line;
 }
 
 int main(){
@@ -195,7 +262,7 @@ int main(){
                 selectedEngineer(select());
                 break;
             case 3:
-
+                save_file();
                 break;
             case 4:
                 close_file();

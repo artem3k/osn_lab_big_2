@@ -22,5 +22,18 @@ namespace utility{
         cout << "\n";
         return selected;
     }
+    int lengthFile(const string& filename){
+        char *str = new char [1024];
+        int i=0;
+        ifstream base(filename);
+        while (!base.eof())
+        {
+            base.getline(str, 1024, '\n');
+            i++;
+        }
+        base.close();
+        delete[] str;
+        return i;
+    }
 }
 
